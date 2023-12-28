@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with JavaScript Validation</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-box {
+            max-width: 400px;
+            padding: 20px;
+           
+            border-radius: 8px;
+            background-color: lightgray;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        input.invalid {
+            border: 1px solid red;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 16px;
+        }
+        .submit-btn {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="form-box">
+    <form id="myForm" onsubmit="return validateForm()">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <div id="emailError" class="error-message"></div>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <div id="passwordError" class="error-message"></div>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" pattern="\d{10}" required>
+        <div id="phoneError" class="error-message"></div>
+
+        <input type="submit" class="submit-btn" value="Submit">
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var isValid = true;
+l
+        var email = document.getElementById("email").value;
+        var emailError = document.getElementById("emailError");
+        if (!isValidEmail(email)) {
+            emailError.innerHTML = "Invalid email address";
+            document.getElementById("email").classList.add("invalid");
+            isValid = false;
+        } else {
+            emailError.innerHTML = "";
+            document.getElementById("email").classList.remove("invalid");
+        }
+
+    
+        var password = document.getElementById("password").value;
+        var passwordError = document.getElementById("passwordError");
+        if (password.length < 6) {
+            passwordError.innerHTML = "Password must be at least 6 characters";
+            document.getElementById("password").classList.add("invalid");
+            isValid = false;
+        } else {
+            passwordError.innerHTML = "";
+            document.getElementById("password").classList.remove("invalid");
+        }
+
+
+        var phone = document.getElementById("phone").value;
+        var phoneError = document.getElementById("phoneError");
+        if (!isValidPhoneNumber(phone)) {
+            phoneError.innerHTML = "Invalid phone number (10 digits)";
+            document.getElementById("phone").classList.add("invalid");
+            isValid = false;
+        } else {
+            phoneError.innerHTML = "";
+            document.getElementById("phone").classList.remove("invalid");
+        }
+
+        return isValid;
+    }
+
+    function isValidEmail(email) {
+    
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function isValidPhoneNumber(phone) {
+        
+        var phoneRegex = /^\d{10}$/;
+        return phoneRegex.test(phone);
+    }
+</script>
+
+</body>
+</html>
